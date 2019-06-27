@@ -18,10 +18,33 @@ public class _03_TestMatchingBrackets {
 		assertFalse(doBracketsMatch("}{"));
 	}
 
-	// USE A STACK TO COMPLETE THE METHOD FOR CHECKING IF EVERY OPENING BRACKET HAS A MATCHING CLOSING BRACKET
+	// USE A STACK TO COMPLETE THE METHOD FOR CHECKING IF EVERY OPENING BRACKET HAS
+	// A MATCHING CLOSING BRACKET
 	private boolean doBracketsMatch(String b) {
-		
-		return false;
+		char firstChar;
+		char secondChar;
+		int loops = 0;
+		Stack<Character> chars = new Stack<Character>();
+
+		for (int i = 0; i < b.length(); i++) {
+			chars.add(b.charAt(i));
+		}
+		while (loops < 10) {
+			for (int i = 0; i < chars.size(); i++) {
+				firstChar = chars.elementAt(i);
+				secondChar = chars.elementAt(i + 1);
+				if (firstChar == '{' && secondChar == '}') {
+					chars.remove(i);
+					chars.remove(i);
+				}
+			}
+			loops++;
+		}
+		if (chars.size() > 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }
