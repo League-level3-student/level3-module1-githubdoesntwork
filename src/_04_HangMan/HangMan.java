@@ -74,12 +74,14 @@ public class HangMan {
 		}
 		display = "";
 		for (int i = 0; i < word.length(); i++) {
-			if (word.charAt(i) == playerGuess) {
-				display = display + playerGuess;
+			for (int j = 0; j < guessed.size(); j++) {
+			if (word.charAt(i) == guessed.get(j)) {
+				display = display + guessed.get(j);
 				System.out.println("ree");
 			} else {
 				display = display + "_";
 			}
+		}
 		}
 		letters.setText(display);
 		System.out.println(display);
