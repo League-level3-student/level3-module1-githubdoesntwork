@@ -35,7 +35,7 @@ public class _03_TestMatchingBrackets {
 				secondChar = chars.elementAt(i + 1);
 				if (firstChar == '{' && secondChar == '}') {
 					chars.remove(i);
-					chars.remove(i);
+					chars.remove(i + 1);
 				}
 			}
 			loops++;
