@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 public class HangMan {
 
 	JFrame frame;
+	StringBuilder str;
 	JPanel panel;
 	JLabel letters;
 	JLabel hangman;
@@ -19,6 +20,7 @@ public class HangMan {
 	String word;
 	String display = "";
 	boolean win = false;
+	boolean tryFailed = true;
 
 	public static void main(String[] args) {
 		HangMan game = new HangMan();
@@ -40,7 +42,7 @@ public class HangMan {
 		panel.add(hangman);
 
 		frame.setResizable(false);
-		frame.setSize(200, 100);
+		frame.setSize(300, 100);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 	}
@@ -51,9 +53,18 @@ public class HangMan {
 			display = display + "_";
 		}
 		letters.setText(display);
-		while (!win || failedTries > 5) {
+		while (!win) {
 			nextTurn();
+			if(failedTries>4) {
+				break;
+			}
 		}
+		if(win) {
+			display = "You Win!";
+		}else {
+			display="You Lose!";
+		}
+		letters.setText(display);
 	}
 
 	public void nextTurn() {
@@ -67,24 +78,38 @@ public class HangMan {
 					JOptionPane.showMessageDialog(null, "You have already guessed this!");
 				} else {
 					guessed.add(playerGuess);
-					System.out.println(guessed);
 					break;
 				}
 			}
 		}
-		display = "";
+		str = new StringBuilder("");
+		for (int i = 0; i < word.length(); i++) {
+			str.append("_");
+		}
 		for (int i = 0; i < word.length(); i++) {
 			for (int j = 0; j < guessed.size(); j++) {
-			if (word.charAt(i) == guessed.get(j)) {
-				display = display + guessed.get(j);
-				System.out.println("ree");
-			} else {
-				display = display + "_";
+				if (word.charAt(i) == guessed.get(j)) {
+					str.setCharAt(i, guessed.get(j));
+				}
 			}
 		}
+		win = true;
+		display = str.toString();
+		for (int i = 0; i < word.length(); i++) {
+			if (display.charAt(i) == '_') {
+				win = false;
+			}
 		}
+		tryFailed = true;
+		for (int i = 0; i < word.length(); i++) {
+			if (playerGuess == word.charAt(i)) {
+				tryFailed = false;
+			}
+		}
+		if (tryFailed) {
+			failedTries++;
+		}
+			display = display + "        Failed Tries: " + failedTries;
 		letters.setText(display);
-		System.out.println(display);
-
 	}
 }
