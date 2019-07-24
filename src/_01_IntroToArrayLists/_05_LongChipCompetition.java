@@ -1,9 +1,8 @@
 package _01_IntroToArrayLists;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Random;
-
-import javax.swing.JOptionPane;
 
 public class _05_LongChipCompetition {
 	/**
@@ -13,12 +12,18 @@ public class _05_LongChipCompetition {
 	 * initialize The Beatles before you start your search. *
 	 **/
 	private ArrayList<Beatle> theBeatles = new ArrayList<Beatle>();
+	ArrayList<Beatle> theBeatlesButActuallyUsable = new ArrayList<Beatle>();
+	String name;
+	Double length;
+	Double longest=0.0;
+	String thing;
 
 	public static void main(String[] args) {
 		_05_LongChipCompetition lcc = new _05_LongChipCompetition();
-		
+		lcc.initializeBeatles();
+		lcc.findChips();
 	}
-	
+
 	private void initializeBeatles() {
 		Beatle george = new Beatle("George");
 		Beatle john = new Beatle("John");
@@ -29,8 +34,24 @@ public class _05_LongChipCompetition {
 		theBeatles.add(paul);
 		theBeatles.add(ringo);
 	}
-	
-	public ArrayList<Beatle> getTheBand(){
+	public void findChips() {
+		theBeatlesButActuallyUsable=getTheBand();
+		for (int i = 0; i < 4; i++) {
+			name = theBeatlesButActuallyUsable.get(i).getName();
+			System.out.println(name);
+			for (int j = 0; j < theBeatlesButActuallyUsable.get(i).getChips().size(); j++) {
+				length = theBeatlesButActuallyUsable.get(i).getChips().get(j).getLength();
+				System.out.println(length);
+				if(length>longest) {
+					longest = length;
+					thing = name;
+				}
+			}
+		}
+		System.out.println(thing +" has the longest chip!");
+	}
+
+	public ArrayList<Beatle> getTheBand() {
 		return theBeatles;
 	}
 }
